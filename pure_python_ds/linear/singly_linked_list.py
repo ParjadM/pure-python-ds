@@ -57,3 +57,16 @@ class SinglyLinkedList(Generic[T]):
         while current:
             yield current.value
             current = current.next
+    def remove_head(self) -> Optional[T]:
+        """Removes and returns the first node's value in O(1) time."""
+        if not self.head:
+            return None
+        
+        value = self.head.value
+        self.head = self.head.next
+        self._length -= 1
+        
+        if self._length == 0:
+            self.tail = None  # If the list is now empty, clear the tail pointer too
+            
+        return value
