@@ -53,34 +53,36 @@ class BinarySearchTree(BinaryTree[T]):
         if key < node.value:
             return self._search_recursive(node.left, key)
         return self._search_recursive(node.right, key)
-    def delete(self, key: T):
-        """Removes a key from the BST using recursive restructuring."""
+    def delete(self, key: T) -> None:
+        """Removes a key from the BST. Targets 100% coverage for deletion logic."""
         self.root = self._delete_recursive(self.root, key)
 
-    def _delete_recursive(self, node, key):
-        if node is None:
-            return node
+    def _delete_recursive(self, node: Optional[TreeNode[T]], key: T) -> Optional[TreeNode[T]]:
+        if not node:
+            return None
 
         if key < node.value:
             node.left = self._delete_recursive(node.left, key)
         elif key > node.value:
             node.right = self._delete_recursive(node.right, key)
         else:
-            # Case 1: No child or 1 child
-            if node.left is None:
+            # Case 1 & 2: Node with only one child or no child
+            if not node.left:
                 return node.right
-            elif node.right is None:
+            elif not node.right:
                 return node.left
 
-            # Case 2: Two children - find inorder successor (smallest in right subtree)
-            temp = self._min_value_node(node.right)
-            node.value = temp.value
-            node.right = self._delete_recursive(node.right, temp.value)
+            # Case 3: Node with two children
+            # Get the inorder successor (smallest in the right subtree)
+            successor = self._min_value_node(node.right)
+            node.value = successor.value
+            # Delete the inorder successor
+            node.right = self._delete_recursive(node.right, successor.value)
 
         return node
 
-    def _min_value_node(self, node):
+    def _min_value_node(self, node: TreeNode[T]) -> TreeNode[T]:
         current = node
-        while current.left is not None:
+        while current.left:
             current = current.left
         return current

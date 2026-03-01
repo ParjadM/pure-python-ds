@@ -36,3 +36,8 @@ class MinHeap(Generic[T]):
         if smallest != index:
             self.heap[index], self.heap[smallest] = self.heap[smallest], self.heap[index]
             self._bubble_down(smallest)
+
+    @property
+    def size(self) -> int:
+        """Returns the number of elements in the heap."""
+        return len(self.heap)

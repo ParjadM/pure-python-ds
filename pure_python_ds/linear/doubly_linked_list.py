@@ -65,3 +65,27 @@ class DoublyLinkedList(Generic[T]):
         """Visual representation showing bidirectional pointers."""
         values = [str(val) for val in self]
         return "None <- " + " <-> ".join(values) + " -> None" if values else "Empty List"
+    def remove(self, value: T):
+        """Removes the first occurrence of value from the list."""
+        current = self.head
+        while current:
+            if current.value == value:
+                # If it's the head
+                if current == self.head:
+                    self.head = current.next
+                    if self.head:
+                        self.head.prev = None
+                    else:
+                        self.tail = None
+                # If it's the tail
+                elif current == self.tail:
+                    self.tail = current.prev
+                    if self.tail:
+                        self.tail.next = None
+                # If it's in the middle
+                else:
+                    current.prev.next = current.next
+                    current.next.prev = current.prev
+                return True
+            current = current.next
+        return False

@@ -22,3 +22,7 @@ class Stack(Generic[T]):
         
     def __str__(self) -> str:
         return f"Stack Top -> {self._container}"
+    def peek(self) -> Optional[T]:
+        if not self._container.head:
+            return None
+        return self._container.head.value

@@ -7,8 +7,12 @@ T = TypeVar('T')
 class BinaryTree(Generic[T]):
     """A strictly typed base Binary Tree with zero-memory generator traversals."""
     
-    def __init__(self):
-        self.root: Optional[TreeNode[T]] = None
+
+    def __init__(self, root_value: Optional[T] = None):
+        if root_value is not None:
+            self.root = TreeNode(root_value)
+        else:
+            self.root = None
 
     def insert(self, value: T) -> None:
         """Level-order insertion utilizing our custom memory-optimized Queue."""

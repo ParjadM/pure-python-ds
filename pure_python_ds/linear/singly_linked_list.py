@@ -67,6 +67,40 @@ class SinglyLinkedList(Generic[T]):
         self._length -= 1
         
         if self._length == 0:
-            self.tail = None  # If the list is now empty, clear the tail pointer too
+            self.tail = None  
             
         return value
+    def reverse(self):
+        """Reverses the list in O(n) time and O(1) space."""
+        prev = None
+        current = self.head
+        while current:
+            next_node = current.next
+            current.next = prev
+            prev = current
+            current = next_node
+        self.head = prev
+    def search(self, value: T) -> bool:
+        """Returns True if value exists in the list, else False."""
+        current = self.head
+        while current:
+            if current.value == value:
+                return True
+            current = current.next
+        return False
+    def remove(self, value: T) -> bool:
+        """Removes the first occurrence of value from the list."""
+        if not self.head:
+            return False
+            
+        if self.head.value == value:
+            self.head = self.head.next
+            return True
+            
+        current = self.head
+        while current.next:
+            if current.next.value == value:
+                current.next = current.next.next
+                return True
+            current = current.next
+        return False

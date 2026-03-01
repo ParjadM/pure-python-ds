@@ -1,6 +1,7 @@
+from .binary_tree import BinaryTree  # Add this line
 from .binary_search_tree import BinarySearchTree
 from .avl_tree import AVLTree
 from .trie import Trie
 from .segment_tree import SegmentTree
 from .red_black_tree import RedBlackTree
-from .b_tree import BTree 
+from .b_tree import BTree

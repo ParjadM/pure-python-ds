@@ -101,3 +101,6 @@ class Graph(Generic[T]):
                     raise ValueError("Graph contains a negative weight cycle")
                     
         return distances
+    def has_edge(self, u: T, v: T) -> bool:
+        """Returns True if there is an edge from u to v."""
+        return u in self._adj_list and v in self._adj_list[u]
