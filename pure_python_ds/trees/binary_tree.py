@@ -62,3 +62,4 @@ class BinaryTree(Generic[T]):
                 yield from _traverse(node.right)
                 yield node.value
         yield from _traverse(self.root)
+    

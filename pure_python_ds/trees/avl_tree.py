@@ -83,3 +83,56 @@ class AVLTree(BinarySearchTree[T]):
             return self._left_rotate(node)
 
         return node
+    def delete(self, key: T):
+        self.root = self._delete_recursive(self.root, key)
+
+    def _delete_recursive(self, root, key):
+        if not root:
+            return root
+
+        # Standard BST Delete logic
+        if key < root.value:
+            root.left = self._delete_recursive(root.left, key)
+        elif key > root.value:
+            root.right = self._delete_recursive(root.right, key)
+        else:
+            if root.left is None:
+                return root.right
+            elif root.right is None:
+                return root.left
+
+            temp = self._get_min_value_node(root.right)
+            root.value = temp.value
+            root.right = self._delete_recursive(root.right, temp.value)
+
+        if root is None:
+            return root
+
+        # AVL FIX-UP: Update height and rebalance
+        root.height = 1 + max(self._get_height(root.left), self._get_height(root.right))
+        balance = self._get_balance(root)
+
+        # Left Left Case
+        if balance > 1 and self._get_balance(root.left) >= 0:
+            return self._right_rotate(root)
+
+        # Left Right Case
+        if balance > 1 and self._get_balance(root.left) < 0:
+            root.left = self._left_rotate(root.left)
+            return self._right_rotate(root)
+
+        # Right Right Case
+        if balance < -1 and self._get_balance(root.right) <= 0:
+            return self._left_rotate(root)
+
+        # Right Left Case
+        if balance < -1 and self._get_balance(root.right) > 0:
+            root.right = self._right_rotate(root.right)
+            return self._left_rotate(root)
+
+        return root
+
+    def _get_min_value_node(self, node):
+        if node is None or node.left is None:
+            return node
+        return self._get_min_value_node(node.left)

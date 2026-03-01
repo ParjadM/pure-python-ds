@@ -1,15 +1,15 @@
-from typing import List, TypeVar, Optional
+from typing import List, TypeVar, Optional, Any
 
 T = TypeVar('T')
 
-def binary_search(arr: List[T], target: T) -> Optional[int]:
+def binary_search(arr: List[Any], target: Any) -> int:
     """
-    Perform O(log n) Binary Search on a sorted list.
-    Returns the index of the target, or None if not found.
+    Performs an iterative binary search on a sorted list.
+    Returns the index of the target if found, else -1.
     """
     low = 0
     high = len(arr) - 1
-
+    
     while low <= high:
         mid = (low + high) // 2
         if arr[mid] == target:
@@ -18,5 +18,5 @@ def binary_search(arr: List[T], target: T) -> Optional[int]:
             low = mid + 1
         else:
             high = mid - 1
-
-    return None
+            
+    return -1
