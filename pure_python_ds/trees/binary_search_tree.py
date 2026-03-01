@@ -41,3 +41,15 @@ class BinarySearchTree(BinaryTree[T]):
             else:
                 current = current.right
         return False
+
+    def search(self, key: T) -> Optional[T]:
+        """Searches for a key in the BST and returns the value if found."""
+        return self._search_recursive(self.root, key)
+
+    def _search_recursive(self, node, key):
+        if node is None or node.value == key:
+            return node
+        
+        if key < node.value:
+            return self._search_recursive(node.left, key)
+        return self._search_recursive(node.right, key)
