@@ -35,6 +35,7 @@ Since the package is in "Editable" mode, you can install it locally to use acros
 git clone [https://github.com/ParjadM/pure-python-ds.git](https://github.com/ParjadM/pure-python-ds.git)
 cd pure-python-ds
 pip install -e .
+```
 
 🚀 Technical Milestone: 83% Unit Test Coverage Reached
 Core Engineering Accomplishments:
