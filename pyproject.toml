@@ -6,20 +6,17 @@ build-backend = "setuptools.build_meta"
 name = "pure-python-ds"
 version = "1.0.0"
 authors = [
-  { name="Parjad Minooei" },
+  { name="Parjad Minooei"},
 ]
-description = "A strictly typed, memory-optimized, pure Python data structures library."
+description = "A memory-optimized, strictly-typed Data Structures and Algorithms library in pure Python."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
-    "Intended Audience :: Developers",
-    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
-[project.urls]
-"Homepage" = "https://github.com/ParjadM/pure-python-ds"
-"Website" = "https://www.parjadm.ca/"
-"Bug Tracker" = "https://github.com/ParjadM/pure-python-ds/issues"
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pure_python_ds*"]
