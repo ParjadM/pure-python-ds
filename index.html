@@ -387,6 +387,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#performance-benchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Benchmarks
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -586,6 +597,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#performance-benchmarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Benchmarks
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -618,6 +640,34 @@
 </ul>
 <h2 id="getting-started">Getting Started</h2>
 <p>Navigate through the tabs above to explore the Linear Structures, Trees, and Graph algorithms.</p>
+<h2 id="performance-benchmarks">Performance Benchmarks</h2>
+<p>We pit our custom <code>AVLTree</code> against Python's highly optimized native <code>list</code> to demonstrate the power of logarithmic time complexity. </p>
+<p><strong>Test Parameters:</strong> Insert 50,000 integers, then search for 1,000 random targets.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Python <code>list</code></th>
+<th><code>AVLTree</code></th>
+<th>Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Insert 50,000 items</strong></td>
+<td>0.0020 sec</td>
+<td>0.8998 sec</td>
+<td>List: $O(1)$ / AVL: $O(\log n)$</td>
+</tr>
+<tr>
+<td><strong>Search 1,000 items</strong></td>
+<td>0.9141 sec</td>
+<td>0.0021 sec</td>
+<td>List: $O(n)$ / AVL: $O(\log n)$</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Result:</strong> The AVL Tree was <strong>436.2x faster</strong> at searching than a standard Python list!</p>
 
 
 
