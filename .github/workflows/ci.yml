@@ -1,0 +1,36 @@
+name: Python CI
+
+# This tells GitHub to run the tests every time you push or merge to the main branch
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Grabs your code from the repository
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2. Sets up the exact Python version you used locally
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    # 3. Installs pytest and pytest-cov
+    - name: Install test dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-cov
+
+    # 4. Runs your test suite and outputs the coverage to the terminal
+    - name: Run tests with pytest
+      env:
+        PYTHONPATH: .
+      run: |
+        pytest --cov=pure_python_ds --cov-report=term
