@@ -1,0 +1,32 @@
+site_name: Pure Python Data Structures
+site_description: A strictly typed, 100% test-covered data structures library.
+repo_url: https://github.com/ParjadM/pure-python-ds
+repo_name: ParjadM/pure-python-ds
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - search.suggest
+  palette:
+    - scheme: default
+      primary: red
+      accent: red
+    - scheme: slate
+      primary: red
+      accent: red
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mkdocstrings
+
+nav:
+  - Overview: index.md
+  - API Reference:
+    - Linear Structures: linear.md
+    - Trees: trees.md
+    - Graphs: graphs.md

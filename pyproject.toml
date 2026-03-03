@@ -1,22 +1,28 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pure-python-ds"
+# You may need to change this if "pure-python-ds" is already taken on PyPI
+name = "pure-python-ds" 
 version = "1.0.0"
 authors = [
-  { name="Parjad Minooei"},
+  { name="Parjad Minooei" }
 ]
-description = "A memory-optimized, strictly-typed Data Structures and Algorithms library in pure Python."
+description = "A strictly typed, 100% test-covered data structures and algorithms library."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 classifiers = [
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
+[project.urls]
+"Documentation" = "https://ParjadM.github.io/pure-python-ds/"
+"Source" = "https://github.com/ParjadM/pure-python-ds"
+
 [tool.setuptools.packages.find]
-where = ["."]
 include = ["pure_python_ds*"]
