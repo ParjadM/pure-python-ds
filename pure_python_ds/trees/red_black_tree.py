@@ -1,7 +1,9 @@
-from typing import Generic, TypeVar, Optional
-from pure_python_ds.nodes.rb_node import RBNode, Color
+from typing import Generic, Optional, TypeVar
 
-T = TypeVar('T')
+from pure_python_ds.nodes.rb_node import Color, RBNode
+
+T = TypeVar("T")
+
 
 class RedBlackTree(Generic[T]):
     def __init__(self):

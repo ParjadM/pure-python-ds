@@ -1,11 +1,13 @@
-from typing import Generic, TypeVar, Optional, Generator
+from typing import Generator, Generic, Optional, TypeVar
+
 from pure_python_ds.nodes import ListNode
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 class DoublyLinkedList(Generic[T]):
     """A strictly typed, memory-optimized Doubly Linked List."""
-    
+
     def __init__(self):
         self.head: Optional[ListNode[T]] = None
         self.tail: Optional[ListNode[T]] = None
@@ -42,15 +44,15 @@ class DoublyLinkedList(Generic[T]):
         """Removes the last node in O(1) time (Impossible in Singly Linked Lists!)."""
         if not self.tail:
             return None
-            
+
         value = self.tail.value
-        if self.head is self.tail: # Only one element
+        if self.head is self.tail:  # Only one element
             self.head = None
             self.tail = None
         else:
             self.tail = self.tail.prev
-            self.tail.next = None # Sever the tie
-            
+            self.tail.next = None  # Sever the tie
+
         self._length -= 1
         return value
 
@@ -64,7 +66,10 @@ class DoublyLinkedList(Generic[T]):
     def __str__(self) -> str:
         """Visual representation showing bidirectional pointers."""
         values = [str(val) for val in self]
-        return "None <- " + " <-> ".join(values) + " -> None" if values else "Empty List"
+        return (
+            "None <- " + " <-> ".join(values) + " -> None" if values else "Empty List"
+        )
+
     def remove(self, value: T):
         """Removes the first occurrence of value from the list."""
         current = self.head

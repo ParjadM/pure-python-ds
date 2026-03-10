@@ -1,7 +1,8 @@
-from typing import Generic, TypeVar, Optional, Set, Dict, List, Tuple
-import heapq # We'll use Python's built-in min-heap for O(log n) efficiency here
+import heapq  # We'll use Python's built-in min-heap for O(log n) efficiency here
+from typing import Dict, Generic, List, Optional, Set, Tuple, TypeVar
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 class Graph(Generic[T]):
     def __init__(self, directed: bool = False):
@@ -27,12 +28,12 @@ class Graph(Generic[T]):
         Returns a dictionary of {vertex: min_distance}.
         """
         # Distances from start to all other nodes are initially infinity
-        distances = {vertex: float('inf') for vertex in self._adj_list}
+        distances = {vertex: float("inf") for vertex in self._adj_list}
         distances[start] = 0
-        
+
         # Priority Queue: (distance, vertex)
         pq = [(0, start)]
-        
+
         while pq:
             current_distance, current_vertex = heapq.heappop(pq)
 
@@ -47,60 +48,63 @@ class Graph(Generic[T]):
                 if distance < distances[neighbor]:
                     distances[neighbor] = distance
                     heapq.heappush(pq, (distance, neighbor))
-                    
+
         return distances
+
     def kruskal_mst(self) -> List[Tuple[T, T, float]]:
         """
         Finds the Minimum Spanning Tree using the library's DSU module.
         Returns a list of edges (v1, v2, weight) in the MST.
         """
         from pure_python_ds.graphs import DSU
-        
+
         edges = []
         # Gather all unique edges
         for u in self._adj_list:
             for v, weight in self._adj_list[u].items():
                 if self.directed or (v, u, weight) not in edges:
                     edges.append((u, v, weight))
-        
+
         # Sort edges by weight
         edges.sort(key=lambda x: x[2])
-        
+
         # Map vertices to integers for DSU
         nodes = list(self._adj_list.keys())
         node_to_idx = {node: i for i, node in enumerate(nodes)}
-        
+
         dsu = DSU(len(nodes))
         mst = []
-        
+
         for u, v, weight in edges:
             if dsu.find(node_to_idx[u]) != dsu.find(node_to_idx[v]):
                 dsu.union(node_to_idx[u], node_to_idx[v])
                 mst.append((u, v, weight))
-                
+
         return mst
+
     def bellman_ford(self, start: T) -> Dict[T, float]:
         """
         Shortest path algorithm that handles negative weights.
         Returns distances or raises ValueError if a negative cycle is found.
         """
-        distances = {vertex: float('inf') for vertex in self._adj_list}
+        distances = {vertex: float("inf") for vertex in self._adj_list}
         distances[start] = 0
-        
+
         # Relax edges |V| - 1 times
         for _ in range(len(self._adj_list) - 1):
             for u in self._adj_list:
                 for v, weight in self._adj_list[u].items():
                     if distances[u] + weight < distances[v]:
                         distances[v] = distances[u] + weight
-                        
+
         # Check for negative cycles
         for u in self._adj_list:
             for v, weight in self._adj_list[u].items():
                 if distances[u] + weight < distances[v]:
                     raise ValueError("Graph contains a negative weight cycle")
-                    
+
         return distances
+
     def has_edge(self, u: T, v: T) -> bool:
         """Returns True if there is an edge from u to v."""
         return u in self._adj_list and v in self._adj_list[u]

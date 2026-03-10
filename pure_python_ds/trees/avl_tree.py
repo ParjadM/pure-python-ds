@@ -1,8 +1,10 @@
-from typing import Generic, TypeVar, Optional
+from typing import Generic, Optional, TypeVar
+
 from pure_python_ds.nodes import TreeNode
 from pure_python_ds.trees.binary_search_tree import BinarySearchTree
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 class AVLTree(BinarySearchTree[T]):
     """A strictly typed, self-balancing AVL Tree guaranteeing O(log n) operations."""
@@ -58,7 +60,7 @@ class AVLTree(BinarySearchTree[T]):
         elif value > node.value:
             node.right = self._insert_recursive(node.right, value)
         else:
-            return node # Duplicate keys not allowed
+            return node  # Duplicate keys not allowed
 
         # 2. Update height of current node
         node.height = 1 + max(self._get_height(node.left), self._get_height(node.right))
@@ -83,10 +85,13 @@ class AVLTree(BinarySearchTree[T]):
             return self._left_rotate(node)
 
         return node
+
     def delete(self, key: T) -> None:
         self.root = self._delete_recursive(self.root, key)
 
-    def _delete_recursive(self, root: Optional[TreeNode[T]], key: T) -> Optional[TreeNode[T]]:
+    def _delete_recursive(
+        self, root: Optional[TreeNode[T]], key: T
+    ) -> Optional[TreeNode[T]]:
         # 1. Standard BST delete
         if not root:
             return root

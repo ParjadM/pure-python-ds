@@ -1,5 +1,6 @@
 from typing import List
 
+
 class SegmentTree:
     def __init__(self, data: List[int]):
         self.n = len(data)

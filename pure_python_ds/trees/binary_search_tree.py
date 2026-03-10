@@ -1,8 +1,10 @@
-from typing import Generic, TypeVar, Optional
+from typing import Generic, Optional, TypeVar
+
 from pure_python_ds.nodes import TreeNode
 from pure_python_ds.trees.binary_tree import BinaryTree
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 class BinarySearchTree(BinaryTree[T]):
     """A strictly typed, memory-optimized Binary Search Tree."""
@@ -49,15 +51,18 @@ class BinarySearchTree(BinaryTree[T]):
     def _search_recursive(self, node, key):
         if node is None or node.value == key:
             return node
-        
+
         if key < node.value:
             return self._search_recursive(node.left, key)
         return self._search_recursive(node.right, key)
+
     def delete(self, key: T) -> None:
         """Removes a key from the BST. Targets 100% coverage for deletion logic."""
         self.root = self._delete_recursive(self.root, key)
 
-    def _delete_recursive(self, node: Optional[TreeNode[T]], key: T) -> Optional[TreeNode[T]]:
+    def _delete_recursive(
+        self, node: Optional[TreeNode[T]], key: T
+    ) -> Optional[TreeNode[T]]:
         if not node:
             return None
 

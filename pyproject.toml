@@ -29,3 +29,10 @@ include = ["pure_python_ds*"]
 
 [tool.setuptools.package-data]
 "pure_python_ds" = ["py.typed"]
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+
+[tool.isort]
+profile = "black"

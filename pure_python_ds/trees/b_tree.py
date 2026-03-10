@@ -1,7 +1,9 @@
-from typing import Generic, TypeVar, Optional
+from typing import Generic, Optional, TypeVar
+
 from pure_python_ds.nodes.b_tree_node import BTreeNode
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 class BTree(Generic[T]):
     def __init__(self, t: int):
@@ -52,4 +54,4 @@ class BTree(Generic[T]):
         y.keys = y.keys[0 : t - 1]
         if not y.leaf:
             z.children = y.children[t : 2 * t]
-            y.children = y.children[0 : t]
+            y.children = y.children[0:t]

@@ -2,11 +2,25 @@ import pytest
 
 from pure_python_ds.algorithms import binary_search
 from pure_python_ds.graphs import DSU, Graph
-from pure_python_ds.linear import DoublyLinkedList, HashTable, MaxHeap, MinHeap, Queue, SinglyLinkedList
+from pure_python_ds.linear import (
+    DoublyLinkedList,
+    HashTable,
+    MaxHeap,
+    MinHeap,
+    Queue,
+    SinglyLinkedList,
+)
 from pure_python_ds.nodes import TrieNode
 from pure_python_ds.nodes.b_tree_node import BTreeNode
 from pure_python_ds.nodes.rb_node import RBNode
-from pure_python_ds.trees import AVLTree, BTree, BinarySearchTree, BinaryTree, RedBlackTree, Trie
+from pure_python_ds.trees import (
+    AVLTree,
+    BinarySearchTree,
+    BinaryTree,
+    BTree,
+    RedBlackTree,
+    Trie,
+)
 
 
 def test_remaining_linear_and_algo_branches():

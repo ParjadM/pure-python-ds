@@ -1,11 +1,13 @@
-from typing import Generic, TypeVar, Optional
+from typing import Generic, Optional, TypeVar
+
 from pure_python_ds.linear.singly_linked_list import SinglyLinkedList
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 class Stack(Generic[T]):
     """A strictly typed, memory-optimized Stack (LIFO)."""
-    
+
     def __init__(self):
         self._container = SinglyLinkedList[T]()
 
@@ -19,9 +21,10 @@ class Stack(Generic[T]):
     def pop(self) -> Optional[T]:
         """Removes and returns the top item in O(1) time."""
         return self._container.remove_head()
-        
+
     def __str__(self) -> str:
         return f"Stack Top -> {self._container}"
+
     def peek(self) -> Optional[T]:
         if not self._container.head:
             return None

@@ -1,5 +1,7 @@
 from typing import Any, List, Optional
+
 from pure_python_ds.linear.singly_linked_list import SinglyLinkedList
+
 
 class HashTable:
     def __init__(self, size: int = 10):
@@ -13,7 +15,7 @@ class HashTable:
         index = self._hash(key)
         if not self.table[index]:
             self.table[index] = SinglyLinkedList()
-        
+
         # Check if key exists to update, else append
         current = self.table[index].head
         while current:
@@ -25,9 +27,11 @@ class HashTable:
 
     def get(self, key: str) -> Any:
         index = self._hash(key)
-        if not self.table[index]: return None
+        if not self.table[index]:
+            return None
         current = self.table[index].head
         while current:
-            if current.value[0] == key: return current.value[1]
+            if current.value[0] == key:
+                return current.value[1]
             current = current.next
         return None

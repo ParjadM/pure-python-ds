@@ -3,6 +3,7 @@ class TrieNode:
         self.children = {}
         self.is_end_of_word = False
 
+
 class Trie:
     def __init__(self):
         self.root = TrieNode()
@@ -18,9 +19,11 @@ class Trie:
     def search(self, word: str) -> bool:
         node = self.root
         for char in word:
-            if char not in node.children: return False
+            if char not in node.children:
+                return False
             node = node.children[char]
         return node.is_end_of_word
+
     def starts_with(self, prefix: str) -> bool:
         node = self.root
         for char in prefix:
@@ -35,13 +38,13 @@ class Trie:
                 if node.is_end_of_word:
                     node.is_end_of_word = False
                 return len(node.children) == 0
-            
+
             char = word[depth]
             if char not in node.children:
                 return False
-            
+
             should_delete_child = _delete(node.children[char], word, depth + 1)
-            
+
             if should_delete_child:
                 del node.children[char]
                 return len(node.children) == 0 and not node.is_end_of_word

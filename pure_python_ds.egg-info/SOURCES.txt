@@ -2,6 +2,7 @@ LICENSE
 README.md
 pyproject.toml
 pure_python_ds/__init__.py
+pure_python_ds/py.typed
 pure_python_ds.egg-info/PKG-INFO
 pure_python_ds.egg-info/SOURCES.txt
 pure_python_ds.egg-info/dependency_links.txt
@@ -33,5 +34,6 @@ pure_python_ds/trees/segment_tree.py
 pure_python_ds/trees/trie.py
 pure_python_ds/trees/utils.py
 tests/test_avl_guaranteed.py
+tests/test_benchmarks.py
 tests/test_core.py
 tests/test_coverage_completion.py

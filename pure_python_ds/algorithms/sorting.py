@@ -1,6 +1,7 @@
 from typing import List, TypeVar
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 def merge_sort(arr: List[T]) -> List[T]:
     """
@@ -16,6 +17,7 @@ def merge_sort(arr: List[T]) -> List[T]:
     right = merge_sort(arr[mid:])
 
     return _merge(left, right)
+
 
 def _merge(left: List[T], right: List[T]) -> List[T]:
     """Helper method to merge two sorted lists into one."""

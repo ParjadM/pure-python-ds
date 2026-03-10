@@ -1,5 +1,6 @@
 from typing import Dict
 
+
 def fibonacci(n: int, memo: Dict[int, int] = None) -> int:
     """
     Computes the nth Fibonacci number using Top-Down DP (Memoization).
@@ -11,6 +12,6 @@ def fibonacci(n: int, memo: Dict[int, int] = None) -> int:
         return memo[n]
     if n <= 1:
         return n
-    
+
     memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
     return memo[n]

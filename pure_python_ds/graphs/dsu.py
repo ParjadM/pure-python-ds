@@ -6,7 +6,7 @@ class DSU:
     def find(self, i: int) -> int:
         if self.parent[i] == i:
             return i
-        self.parent[i] = self.find(self.parent[i]) # Path Compression
+        self.parent[i] = self.find(self.parent[i])  # Path Compression
         return self.parent[i]
 
     def union(self, i: int, j: int):

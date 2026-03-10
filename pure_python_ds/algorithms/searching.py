@@ -1,6 +1,7 @@
-from typing import List, TypeVar, Optional, Any
+from typing import Any, List, Optional, TypeVar
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 def binary_search(arr: List[Any], target: Any) -> int:
     """
@@ -9,7 +10,7 @@ def binary_search(arr: List[Any], target: Any) -> int:
     """
     low = 0
     high = len(arr) - 1
-    
+
     while low <= high:
         mid = (low + high) // 2
         if arr[mid] == target:
@@ -18,5 +19,5 @@ def binary_search(arr: List[Any], target: Any) -> int:
             low = mid + 1
         else:
             high = mid - 1
-            
+
     return -1
