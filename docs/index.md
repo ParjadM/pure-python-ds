@@ -1,26 +1,33 @@
-# Pure Python Data Structures
+# pure-python-ds 🚀
+**A strictly-typed, 100% test-covered, and benchmarked Data Structures & Algorithms library.**
 
-![Build Status](https://github.com/ParjadM/pure-python-ds/actions/workflows/ci.yml/badge.svg)
-![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg)
+[![Python Version](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Tests](https://github.com/ParjadM/pure-python-ds/actions/workflows/ci.yml/badge.svg)](https://github.com/ParjadM/pure-python-ds/actions)
 
-Welcome to **Pure Python Data Structures**! This is a comprehensive, strictly typed, and thoroughly tested algorithms and data structures library built completely from scratch in Python 3.12.
+## 🏗️ Architecture & Engineering
+This library is engineered for **Systems Architects** and developers who require predictable performance and strict type safety. Every structure is built using Python's `__slots__` to ensure a minimal memory footprint and high-speed attribute access.
 
-## Features
-* **Zero External Dependencies:** Built entirely with Python's standard library.
-* **Strictly Typed:** Full Type Hinting support for IDE auto-completion.
-* **100% Test Coverage:** Exhaustively tested edge cases, including complex tree rotations.
+[Image of a software architecture diagram showing layers of data structures and algorithms]
 
-## Getting Started
-Navigate through the tabs above to explore the Linear Structures, Trees, and Graph algorithms.
+## 🛡️ Technical Milestones
+* **100% Test Coverage:** Verified 100% line coverage across the entire core library using `pytest` and `coverage.py`.
+* **Performance Benchmarked:** Custom AVL Tree implementation demonstrated search operations up to **436x faster** than standard Python list lookups in large-scale datasets.
+* **Type Safety:** 100% `mypy` compliance with strict type hinting for all inputs and return values.
 
-## Performance Benchmarks
-We pit our custom `AVLTree` against Python's highly optimized native `list` to demonstrate the power of logarithmic time complexity. 
+## 🛠️ Key Features
+### 1. Linear Structures
+* **Linked Lists:** Singly and Doubly Linked Lists with $O(1)$ head/tail operations.
+* **Stacks & Queues:** Built on optimized nodes for strict LIFO/FIFO behavior.
+* **Hash Tables:** Linear probing implementation with dynamic resizing.
 
-**Test Parameters:** Insert 50,000 integers, then search for 1,000 random targets.
+### 2. Hierarchical & Network Structures
+* **AVL Trees:** Self-balancing trees with rotation logic guaranteeing $O(\log n)$ performance.
+* **Red-Black Trees:** Memory-optimized nodes with $O(\log n)$ height guarantees.
+* **Graphs:** Adjacency-list based supporting Dijkstra’s, Bellman-Ford, and Kruskal’s (via custom DSU).
 
-| Operation | Python `list` | `AVLTree` | Time Complexity |
-|---|---|---|---|
-| **Insert 50,000 items** | 0.0020 sec | 0.8998 sec | List: $O(1)$ / AVL: $O(\log n)$ |
-| **Search 1,000 items** | 0.9141 sec | 0.0021 sec | List: $O(n)$ / AVL: $O(\log n)$ |
+### 3. Advanced Data Structures
+* **Segment Trees:** Range Query/Point Update in $O(\log n)$.
+* **Tries:** Space-efficient prefix trees for string operations.
+* **Heaps:** Min/Max Binary Heaps for $O(1)$ priority access.
 
-**Result:** The AVL Tree was **436.2x faster** at searching than a standard Python list!
