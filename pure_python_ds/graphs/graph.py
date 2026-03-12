@@ -1,5 +1,7 @@
-import heapq  # We'll use Python's built-in min-heap for O(log n) efficiency here
-from typing import Dict, Generic, List, Optional, Set, Tuple, TypeVar
+import heapq
+import math
+from collections import deque
+from typing import Any, Dict, Generic, List, Optional, Set, Tuple, TypeVar
 
 T = TypeVar("T")
 
@@ -108,3 +110,84 @@ class Graph(Generic[T]):
     def has_edge(self, u: T, v: T) -> bool:
         """Returns True if there is an edge from u to v."""
         return u in self._adj_list and v in self._adj_list[u]
+
+    def topological_sort(self) -> List[Any]:
+        """
+        Performs a topological sort on a Directed Acyclic Graph (DAG)
+        using Kahn's Algorithm.
+
+        Returns:
+            A list of vertices in topologically sorted order.
+
+        Raises:
+            ValueError: If the graph contains a cycle (sort is impossible).
+        """
+        # 1. Initialize all in-degrees to 0
+        in_degree = {node: 0 for node in self._adj_list}
+
+        # 2. Calculate actual in-degrees
+        for node in self._adj_list:
+            for neighbor in self._adj_list[node]:
+                if neighbor not in in_degree:
+                    in_degree[neighbor] = 0
+                in_degree[neighbor] += 1
+
+        # 3. Queue nodes with no incoming dependencies (in-degree == 0)
+        queue = deque([node for node in in_degree if in_degree[node] == 0])
+        sorted_order = []
+
+        # 4. Process the queue
+        while queue:
+            current = queue.popleft()
+            sorted_order.append(current)
+
+            # Reduce the in-degree of all neighbors by 1
+            for neighbor in self._adj_list.get(current, []):
+                in_degree[neighbor] -= 1
+                if in_degree[neighbor] == 0:
+                    queue.append(neighbor)
+
+        # 5. Cycle Detection: If we didn't process every node, there's a loop
+        if len(sorted_order) != len(in_degree):
+            raise ValueError(
+                "Graph contains a cycle; topological sort is not possible."
+            )
+
+        return sorted_order
+
+    def dijkstra(self, start_node: Any) -> Dict[Any, float]:
+        """
+        Computes the shortest path from a starting node to all other reachable nodes.
+        """
+        distances = {node: math.inf for node in self._adj_list}
+        if start_node not in distances:
+            raise ValueError(f"Start node '{start_node}' not found in graph.")
+            
+        distances[start_node] = 0
+        pq = [(0, start_node)]
+        
+        while pq:
+            current_distance, current_node = heapq.heappop(pq)
+            
+            if current_distance > distances[current_node]:
+                continue
+                
+            # Grab neighbors (handles both Lists and Dictionaries safely)
+            neighbors = self._adj_list.get(current_node, [])
+            iterator = neighbors.items() if isinstance(neighbors, dict) else neighbors
+                
+            for edge in iterator:
+                # If it's a tuple from dict.items() or a tuple in a list
+                if isinstance(edge, tuple) and len(edge) == 2:
+                    neighbor, weight = edge
+                else:
+                    neighbor = edge
+                    weight = 1  
+                    
+                distance = current_distance + weight
+                
+                if distance < distances.get(neighbor, math.inf):
+                    distances[neighbor] = distance
+                    heapq.heappush(pq, (distance, neighbor))
+                    
+        return distances

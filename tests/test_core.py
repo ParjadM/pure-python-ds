@@ -540,3 +540,27 @@ def test_avl_unbound_method_force():
     avl.root = AVLTree._delete_recursive(avl, avl.root, 30)  # RR
     avl.root = AVLTree._delete_recursive(avl, avl.root, 50)  # Two-child
     avl.root = AVLTree._delete_recursive(avl, avl.root, 999)  # Miss
+
+
+def test_topological_sort_success():
+    g = Graph(directed=True)  # <-- Add flag here
+    g.add_edge("A", "C")
+    g.add_edge("B", "C")
+    g.add_edge("C", "D")
+
+    order = g.topological_sort()
+    assert order.index("A") < order.index("C")
+    assert order.index("B") < order.index("C")
+    assert order.index("C") < order.index("D")
+
+
+def test_topological_sort_cycle():
+    g = Graph(directed=True)  # <-- Add flag here
+    g.add_edge("A", "B")
+    g.add_edge("B", "C")
+    g.add_edge("C", "A")
+
+    with pytest.raises(ValueError, match="Graph contains a cycle"):
+        g.topological_sort()
+
+
