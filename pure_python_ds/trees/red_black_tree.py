@@ -1,6 +1,7 @@
 from typing import Generic, Optional, TypeVar
 
 from pure_python_ds.nodes.rb_node import Color, RBNode
+from pure_python_ds.trees.utils import visualize_binary_tree
 
 T = TypeVar("T")
 
@@ -10,6 +11,10 @@ class RedBlackTree(Generic[T]):
         self.NULL = RBNode(None)
         self.NULL.color = Color.BLACK
         self.root = self.NULL
+    def __str__(self) -> str:
+        """Returns the ASCII visualization of the tree."""
+        # Assuming your tree class stores the root node in 'self.root'
+        return visualize_binary_tree(self.root)
 
     def insert(self, key: T):
         node = RBNode(key)

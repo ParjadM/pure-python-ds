@@ -1,5 +1,5 @@
 from typing import List
-
+from pure_python_ds.trees.utils import visualize_binary_tree
 
 class SegmentTree:
     def __init__(self, data: List[int]):
@@ -10,7 +10,10 @@ class SegmentTree:
             self.tree[self.n + i] = data[i]
         for i in range(self.n - 1, 0, -1):
             self.tree[i] = self.tree[2 * i] + self.tree[2 * i + 1]
-
+    def __str__(self) -> str:
+        """Returns the ASCII visualization of the tree."""
+        # Assuming your tree class stores the root node in 'self.root'
+        return visualize_binary_tree(self.root)
     def update(self, index: int, value: int):
         """Update a value at a specific index in O(log n)."""
         index += self.n

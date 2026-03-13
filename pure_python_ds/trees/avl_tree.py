@@ -2,13 +2,11 @@ from typing import Generic, Optional, TypeVar
 
 from pure_python_ds.nodes import TreeNode
 from pure_python_ds.trees.binary_search_tree import BinarySearchTree
-
 T = TypeVar("T")
 
 
 class AVLTree(BinarySearchTree[T]):
     """A strictly typed, self-balancing AVL Tree guaranteeing O(log n) operations."""
-
     def _get_height(self, node: Optional[TreeNode[T]]) -> int:
         if not node:
             return 0

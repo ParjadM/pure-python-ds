@@ -2,13 +2,16 @@ from typing import Generator, Generic, Optional, TypeVar
 
 from pure_python_ds.linear import Queue
 from pure_python_ds.nodes import TreeNode
-
 T = TypeVar("T")
 
 
 class BinaryTree(Generic[T]):
     """A strictly typed base Binary Tree with zero-memory generator traversals."""
-
+    def __str__(self) -> str:
+        if self.root is None:
+            return ""
+        from pure_python_ds.trees.utils import visualize_binary_tree
+        return visualize_binary_tree(self.root)
     def __init__(self, root_value: Optional[T] = None):
         if root_value is not None:
             self.root = TreeNode(root_value)

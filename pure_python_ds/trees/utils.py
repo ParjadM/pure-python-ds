@@ -1,9 +1,9 @@
 from typing import Optional, TypeVar
 
 from pure_python_ds.nodes import TreeNode
-from pure_python_ds.trees.binary_search_tree import BinarySearchTree
 from pure_python_ds.trees.binary_tree import BinaryTree
-
+from pure_python_ds.trees.binary_search_tree import BinarySearchTree
+from typing import Any
 T = TypeVar("T")
 
 

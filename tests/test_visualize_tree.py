@@ -1,5 +1,6 @@
 from pure_python_ds.trees.utils import visualize_binary_tree
-
+from pure_python_ds.trees.avl_tree import AVLTree
+from pure_python_ds.trees.binary_search_tree import BinarySearchTree
 
 class DummyNode:
     """Isolated node class for testing visualization logic."""
@@ -96,3 +97,29 @@ def test_attribute_precedence():
     # 3. Test no .value or .val (fallback to __str__)
     node_str = VallessNode(99)
     assert "99" in visualize_binary_tree(node_str)
+def test_tree_str_magic_methods():
+    # 1. Test empty tree
+    empty_bst = BinarySearchTree()
+    assert str(empty_bst) == ""
+
+    # 2. Test standard BST
+    bst = BinarySearchTree()
+    bst.insert(10)
+    bst.insert(5)
+    bst.insert(15)
+    
+    bst_str = str(bst)
+    assert "10" in bst_str
+    assert "├── 5" in bst_str
+    assert "└── 15" in bst_str
+
+    # 3. Test AVL Tree (Proves the visualizer works with auto-balancing)
+    avl = AVLTree()
+    avl.insert(10)
+    avl.insert(20)
+    avl.insert(30) # This should trigger a left rotation, making 20 the root
+    
+    avl_str = str(avl)
+    assert avl_str.startswith("20") # 20 must be at the very top
+    assert "├── 10" in avl_str
+    assert "└── 30" in avl_str
