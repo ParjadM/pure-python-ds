@@ -26,3 +26,47 @@ def convert_to_bst(tree: BinaryTree[T]) -> BinarySearchTree[T]:
 
     bst.root = _build_balanced(values)
     return bst
+
+
+def visualize_binary_tree(
+    node: object, prefix: str = "", is_left: bool = True, is_root: bool = True
+) -> str:
+    """
+    Generates an ASCII visualization of a binary tree.
+    """
+    if node is None:
+        return "None"
+
+    # Safely extract the node's value whether the attribute is named .value or .val
+    if hasattr(node, "value"):
+        val = str(node.value)
+    elif hasattr(node, "val"):
+        val = str(node.val)
+    else:
+        val = str(node)
+
+    if is_root:
+        result = val + "\n"
+        child_prefix = ""
+    else:
+        connector = "├── " if is_left else "└── "
+        result = prefix + connector + val + "\n"
+        child_prefix = prefix + ("│   " if is_left else "    ")
+
+    left = getattr(node, "left", None)
+    right = getattr(node, "right", None)
+
+    if left is None and right is None:
+        return result
+
+    if left:
+        result += visualize_binary_tree(left, child_prefix, True, False)
+    elif right:
+        result += child_prefix + "├── (None)\n"
+
+    if right:
+        result += visualize_binary_tree(right, child_prefix, False, False)
+    elif left:
+        result += child_prefix + "└── (None)\n"
+
+    return result

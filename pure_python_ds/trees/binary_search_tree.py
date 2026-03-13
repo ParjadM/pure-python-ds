@@ -2,13 +2,18 @@ from typing import Generic, Optional, TypeVar
 
 from pure_python_ds.nodes import TreeNode
 from pure_python_ds.trees.binary_tree import BinaryTree
+from pure_python_ds.trees.utils import visualize_binary_tree
 
 T = TypeVar("T")
 
 
 class BinarySearchTree(BinaryTree[T]):
     """A strictly typed, memory-optimized Binary Search Tree."""
-
+    def __str__(self) -> str:
+        """Returns the ASCII visualization of the tree."""
+        # Assuming your tree class stores the root node in 'self.root'
+        return visualize_binary_tree(self.root)
+    
     def insert(self, value: T) -> None:
         """Iterative O(log n) insertion to maintain strict order."""
         new_node = TreeNode(value)
