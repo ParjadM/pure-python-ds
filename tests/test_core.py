@@ -1,7 +1,7 @@
 import pytest
 
 from pure_python_ds.algorithms import binary_search, fibonacci, merge_sort
-from pure_python_ds.graphs import DSU, Graph
+from pure_python_ds.graphs import DisjointSet, Graph
 from pure_python_ds.linear import (
     DoublyLinkedList,
     HashTable,
@@ -141,7 +141,7 @@ def test_algorithms_and_graphs():
     g.add_edge("C", "D", -1)
     assert g.bellman_ford("A")["D"] == 2
 
-    d = DSU(5)
+    d = DisjointSet(range(5))
     d.union(0, 1)
     d.union(1, 2)
     assert d.find(0) == d.find(2)
@@ -562,5 +562,3 @@ def test_topological_sort_cycle():
 
     with pytest.raises(ValueError, match="Graph contains a cycle"):
         g.topological_sort()
-
-

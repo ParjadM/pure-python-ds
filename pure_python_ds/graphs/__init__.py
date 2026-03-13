@@ -1,2 +1,2 @@
-from .dsu import DSU
+from .disjoint_set import DisjointSet
 from .graph import Graph

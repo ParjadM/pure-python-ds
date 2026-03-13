@@ -1,7 +1,7 @@
 import pytest
 
 from pure_python_ds.algorithms import binary_search
-from pure_python_ds.graphs import DSU, Graph
+from pure_python_ds.graphs import DisjointSet, Graph
 from pure_python_ds.linear import (
     DoublyLinkedList,
     HashTable,
@@ -55,7 +55,7 @@ def test_remaining_linear_and_algo_branches():
 
 
 def test_remaining_graph_and_dsu_branches():
-    dsu = DSU(3)
+    dsu = DisjointSet(range(3))
     dsu.union(0, 1)
     dsu.union(2, 1)
     assert dsu.find(2) == dsu.find(0)

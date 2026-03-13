@@ -58,7 +58,7 @@ class Graph(Generic[T]):
         Finds the Minimum Spanning Tree using the library's DSU module.
         Returns a list of edges (v1, v2, weight) in the MST.
         """
-        from pure_python_ds.graphs import DSU
+        from pure_python_ds.graphs.disjoint_set import DisjointSet
 
         edges = []
         # Gather all unique edges
@@ -70,16 +70,11 @@ class Graph(Generic[T]):
         # Sort edges by weight
         edges.sort(key=lambda x: x[2])
 
-        # Map vertices to integers for DSU
-        nodes = list(self._adj_list.keys())
-        node_to_idx = {node: i for i, node in enumerate(nodes)}
-
-        dsu = DSU(len(nodes))
+        dsu = DisjointSet[T](self._adj_list.keys())
         mst = []
 
         for u, v, weight in edges:
-            if dsu.find(node_to_idx[u]) != dsu.find(node_to_idx[v]):
-                dsu.union(node_to_idx[u], node_to_idx[v])
+            if dsu.union(u, v):
                 mst.append((u, v, weight))
 
         return mst
@@ -162,32 +157,32 @@ class Graph(Generic[T]):
         distances = {node: math.inf for node in self._adj_list}
         if start_node not in distances:
             raise ValueError(f"Start node '{start_node}' not found in graph.")
-            
+
         distances[start_node] = 0
         pq = [(0, start_node)]
-        
+
         while pq:
             current_distance, current_node = heapq.heappop(pq)
-            
+
             if current_distance > distances[current_node]:
                 continue
-                
+
             # Grab neighbors (handles both Lists and Dictionaries safely)
             neighbors = self._adj_list.get(current_node, [])
             iterator = neighbors.items() if isinstance(neighbors, dict) else neighbors
-                
+
             for edge in iterator:
                 # If it's a tuple from dict.items() or a tuple in a list
                 if isinstance(edge, tuple) and len(edge) == 2:
                     neighbor, weight = edge
                 else:
                     neighbor = edge
-                    weight = 1  
-                    
+                    weight = 1
+
                 distance = current_distance + weight
-                
+
                 if distance < distances.get(neighbor, math.inf):
                     distances[neighbor] = distance
                     heapq.heappush(pq, (distance, neighbor))
-                    
+
         return distances
