@@ -16,6 +16,9 @@ class DoublyLinkedList(Generic[T]):
     def __len__(self) -> int:
         return self._length
 
+    def is_empty(self) -> bool:
+        return self._length == 0
+
     def append(self, value: T) -> None:
         """Adds a node to the end in O(1) time."""
         new_node = ListNode(value)
@@ -39,6 +42,23 @@ class DoublyLinkedList(Generic[T]):
             self.head.prev = new_node
             self.head = new_node
         self._length += 1
+
+    def remove_head(self) -> Optional[T]:
+        """Removes the first node in O(1) time."""
+        if not self.head:
+            return None
+
+        value = self.head.value
+        if self.head is self.tail:  # Only one element
+            self.head = None
+            self.tail = None
+        else:
+            self.head = self.head.next
+            if self.head:
+                self.head.prev = None
+
+        self._length -= 1
+        return value
 
     def remove_tail(self) -> Optional[T]:
         """Removes the last node in O(1) time (Impossible in Singly Linked Lists!)."""

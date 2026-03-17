@@ -1,7 +1,7 @@
 import heapq
 import math
 from collections import deque
-from typing import Any, Dict, Generic, List, Optional, Set, Tuple, TypeVar
+from typing import Any, Callable, Dict, Generic, List, Optional, Set, Tuple, TypeVar
 
 T = TypeVar("T")
 
@@ -29,6 +29,9 @@ class Graph(Generic[T]):
         Greedy algorithm to find the shortest distance from 'start' to all other nodes.
         Returns a dictionary of {vertex: min_distance}.
         """
+        if start not in self._adj_list:
+            raise ValueError(f"Start node '{start}' not found in graph.")
+
         # Distances from start to all other nodes are initially infinity
         distances = {vertex: float("inf") for vertex in self._adj_list}
         distances[start] = 0
@@ -150,39 +153,117 @@ class Graph(Generic[T]):
 
         return sorted_order
 
-    def dijkstra(self, start_node: Any) -> Dict[Any, float]:
+    def bfs(self, start: T) -> List[T]:
         """
-        Computes the shortest path from a starting node to all other reachable nodes.
+        Breadth-First Search. Returns the list of visited nodes in order.
         """
-        distances = {node: math.inf for node in self._adj_list}
-        if start_node not in distances:
-            raise ValueError(f"Start node '{start_node}' not found in graph.")
+        if start not in self._adj_list:
+            raise ValueError(f"Start node '{start}' not found in graph.")
 
-        distances[start_node] = 0
-        pq = [(0, start_node)]
+        visited: Set[T] = set()
+        queue = deque([start])
+        order: List[T] = []
 
-        while pq:
-            current_distance, current_node = heapq.heappop(pq)
+        while queue:
+            node = queue.popleft()
+            if node not in visited:
+                visited.add(node)
+                order.append(node)
+                for neighbor in self._adj_list.get(node, {}):
+                    if neighbor not in visited:
+                        queue.append(neighbor)
+        return order
 
-            if current_distance > distances[current_node]:
-                continue
+    def dfs(self, start: T) -> List[T]:
+        """
+        Depth-First Search (Iterative). Returns visited nodes in order.
+        """
+        if start not in self._adj_list:
+            raise ValueError(f"Start node '{start}' not found in graph.")
 
-            # Grab neighbors (handles both Lists and Dictionaries safely)
-            neighbors = self._adj_list.get(current_node, [])
-            iterator = neighbors.items() if isinstance(neighbors, dict) else neighbors
+        visited: Set[T] = set()
+        stack = [start]
+        order: List[T] = []
 
-            for edge in iterator:
-                # If it's a tuple from dict.items() or a tuple in a list
-                if isinstance(edge, tuple) and len(edge) == 2:
-                    neighbor, weight = edge
-                else:
-                    neighbor = edge
-                    weight = 1
+        while stack:
+            node = stack.pop()
+            if node not in visited:
+                visited.add(node)
+                order.append(node)
+                # To maintain standard DFS order, we add neighbors in reverse
+                neighbors = list(self._adj_list.get(node, {}).keys())
+                for neighbor in reversed(neighbors):
+                    if neighbor not in visited:
+                        stack.append(neighbor)
+        return order
 
-                distance = current_distance + weight
+    def prims_mst(self) -> List[Tuple[T, T, float]]:
+        """
+        Prim's Minimum Spanning Tree algorithm.
+        Returns a list of edges (u, v, weight) forming the MST.
+        """
+        if not self._adj_list:
+            return []
 
-                if distance < distances.get(neighbor, math.inf):
-                    distances[neighbor] = distance
-                    heapq.heappush(pq, (distance, neighbor))
+        start = next(iter(self._adj_list))
+        visited = {start}
+        mst = []
+        pq: List[Tuple[float, T, T]] = []
 
-        return distances
+        for neighbor, weight in self._adj_list[start].items():
+            heapq.heappush(pq, (weight, start, neighbor))
+
+        while pq and len(visited) < len(self._adj_list):
+            weight, u, v = heapq.heappop(pq)
+            if v not in visited:
+                visited.add(v)
+                mst.append((u, v, weight))
+                for next_neighbor, next_weight in self._adj_list[v].items():
+                    if next_neighbor not in visited:
+                        heapq.heappush(pq, (next_weight, v, next_neighbor))
+
+        return mst
+
+    def a_star_search(self, start: T, goal: T, heuristic: Callable[[T], float]) -> List[T]:
+        """
+        A* Search algorithm.
+        Returns the shortest path (list of nodes) from start to goal.
+        """
+        if start not in self._adj_list or goal not in self._adj_list:
+            raise ValueError("Start or goal node not found in graph.")
+
+        open_set: List[Tuple[float, int, T]] = [(heuristic(start), 0, start)]
+        came_from: Dict[T, T] = {}
+
+        g_score = {node: float("inf") for node in self._adj_list}
+        g_score[start] = 0
+
+        f_score = {node: float("inf") for node in self._adj_list}
+        f_score[start] = heuristic(start)
+
+        tie_breaker = 0
+
+        while open_set:
+            _, _, current = heapq.heappop(open_set)
+
+            if current == goal:
+                path = [current]
+                while current in came_from:
+                    current = came_from[current]
+                    path.append(current)
+                return path[::-1]
+
+            for neighbor, weight in self._adj_list.get(current, {}).items():
+                tentative_g_score = g_score[current] + weight
+
+                if tentative_g_score < g_score[neighbor]:
+                    came_from[neighbor] = current
+                    g_score[neighbor] = tentative_g_score
+                    f_score[neighbor] = tentative_g_score + heuristic(neighbor)
+
+                    tie_breaker += 1
+                    heapq.heappush(open_set, (f_score[neighbor], tie_breaker, neighbor))
+
+        return []
+
+

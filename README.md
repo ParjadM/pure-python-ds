@@ -24,10 +24,18 @@ This library is engineered for **Systems Architects** and developers who require
 ### 2. Hierarchical & Network Structures
 * **AVL Trees:** Self-balancing trees with rotation logic guaranteeing $O(\log n)$ performance.
 * **Red-Black Trees:** Memory-optimized nodes with $O(\log n)$ height guarantees.
-* **Graphs:** Adjacency-list based supporting Dijkstra’s, Bellman-Ford, and Kruskal’s (via custom DSU).
+* **Graphs:** Adjacency-list based supporting Dijkstra’s, Bellman-Ford, Kruskal’s (via custom DSU), Prim's, A* Search, BFS, and DFS.
+* **Bloom Filters:** Space-efficient probabilistic bit-array structures.
 
 ### 3. Advanced Data Structures
 * **Segment Trees:** Range Query/Point Update in $O(\log n)$.
 * **Tries:** Space-efficient prefix trees for string operations.
-* **Heaps:** Min/Max Binary Heaps for $O(1)$ priority access.
+* **Heaps & Priority Queues:** Min/Max Binary Heaps and native PriorityQueue wrappers for $O(1)$ optimal access.
+* **LRU Caches:** Optimized $O(1)$ mapping mapping backed by Doubly Linked Lists.
+
+### 4. Algorithms Module (New in v1.1.0!)
+* **Sorting**: Quick Sort, Heap Sort, Merge Sort, Insertion Sort, and Radix Sort.
+* **Searching**: Binary, Linear, Jump, and Exponential Search.
+* **Dynamic Programming**: 0-1 Knapsack, LCS, LIS, Edit Distance, and Memoized Fibonacci.
+* **String Matching**: Knuth-Morris-Pratt (KMP) & Rabin-Karp implementations.
 

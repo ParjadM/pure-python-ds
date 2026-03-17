@@ -1,0 +1,21 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.12.12, pytest-9.0.2, pluggy-1.6.0
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: C:\Users\Parjad\Desktop\Portfolio\DSAPackage\pure-python-ds
+configfile: pytest.ini
+plugins: benchmark-5.2.3, cov-7.0.0
+collected 3 items
+
+tests\test_advanced_structures.py .F.                                    [100%]
+
+================================== FAILURES ===================================
+_____________________________ test_priority_queue _____________________________
+tests\test_advanced_structures.py:23: in test_priority_queue
+    pq.push(3, "Task 3")
+pure_python_ds\linear\priority_queue.py:30: in push
+    self._heap.insert((priority, item))
+    ^^^^^^^^^^^^^^^^^
+E   AttributeError: 'MinHeap' object has no attribute 'insert'
+=========================== short test summary info ===========================
+FAILED tests/test_advanced_structures.py::test_priority_queue - AttributeErro...
+========================= 1 failed, 2 passed in 0.24s =========================
