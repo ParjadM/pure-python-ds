@@ -6,4 +6,4 @@ Structures for representing networks and complex relationships.
 ::: pure_python_ds.graphs.graph.Graph
 
 ## Disjoint Set (Union-Find)
-::: pure_python_ds.graphs.dsu.DSU
+::: pure_python_ds.graphs.disjoint_set.DisjointSet
