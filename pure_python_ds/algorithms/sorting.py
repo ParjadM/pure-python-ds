@@ -1,7 +1,10 @@
-import heapq
-from typing import List, TypeVar
+from typing import Any, List, Protocol, TypeVar
 
-T = TypeVar("T")
+class Comparable(Protocol):
+    def __lt__(self, other: Any) -> bool: ...
+    def __gt__(self, other: Any) -> bool: ...
+
+T = TypeVar("T", bound=Comparable)
 
 
 def merge_sort(arr: List[T]) -> List[T]:

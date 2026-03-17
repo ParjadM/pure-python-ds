@@ -27,6 +27,6 @@ class TrieNode:
     # FIXED: Added is_end_of_word to slots and init
     __slots__ = ["children", "is_end_of_word"]
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.children: Dict[str, "TrieNode"] = {}
         self.is_end_of_word: bool = False

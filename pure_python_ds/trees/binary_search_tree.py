@@ -1,9 +1,13 @@
-from typing import Generic, Optional, TypeVar
+from typing import Any, Generic, Optional, Protocol, TypeVar
 
 from pure_python_ds.nodes import TreeNode
 from pure_python_ds.trees.binary_tree import BinaryTree
 
-T = TypeVar("T")
+class Comparable(Protocol):
+    def __lt__(self, other: Any) -> bool: ...
+    def __gt__(self, other: Any) -> bool: ...
+
+T = TypeVar("T", bound=Comparable)
 
 
 class BinarySearchTree(BinaryTree[T]):

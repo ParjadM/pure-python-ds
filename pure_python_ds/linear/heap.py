@@ -1,6 +1,10 @@
-from typing import Generic, List, Optional, TypeVar
+from typing import Any, Generic, List, Optional, Protocol, TypeVar
 
-T = TypeVar("T")
+class Comparable(Protocol):
+    def __lt__(self, other: Any) -> bool: ...
+    def __gt__(self, other: Any) -> bool: ...
+
+T = TypeVar("T", bound=Comparable)
 
 
 class MinHeap(Generic[T]):

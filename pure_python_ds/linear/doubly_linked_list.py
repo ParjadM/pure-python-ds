@@ -8,7 +8,7 @@ T = TypeVar("T")
 class DoublyLinkedList(Generic[T]):
     """A strictly typed, memory-optimized Doubly Linked List."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.head: Optional[ListNode[T]] = None
         self.tail: Optional[ListNode[T]] = None
         self._length: int = 0
@@ -71,7 +71,8 @@ class DoublyLinkedList(Generic[T]):
             self.tail = None
         else:
             self.tail = self.tail.prev
-            self.tail.next = None  # Sever the tie
+            if self.tail:
+                self.tail.next = None  # Sever the tie
 
         self._length -= 1
         return value
@@ -90,7 +91,7 @@ class DoublyLinkedList(Generic[T]):
             "None <- " + " <-> ".join(values) + " -> None" if values else "Empty List"
         )
 
-    def remove(self, value: T):
+    def remove(self, value: T) -> bool:
         """Removes the first occurrence of value from the list."""
         current = self.head
         while current:
@@ -109,8 +110,10 @@ class DoublyLinkedList(Generic[T]):
                         self.tail.next = None
                 # If it's in the middle
                 else:
-                    current.prev.next = current.next
-                    current.next.prev = current.prev
+                    if current.prev:
+                        current.prev.next = current.next
+                    if current.next:
+                        current.next.prev = current.prev
                 return True
             current = current.next
         return False

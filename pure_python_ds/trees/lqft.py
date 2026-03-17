@@ -18,7 +18,7 @@ from pure_python_ds.nodes.lqft_nodes import CollisionNode, InternalNode, LeafNod
 """
 
 class LQFTMap:
-    def __init__(self):
+    def __init__(self) -> None:
         # 1. The Mutable Head (L0 MemTable - absorbs fast writes)
         self._mutable_head: Dict[str, str] = {}
         self._tombstones: Set[str] = set()
@@ -256,7 +256,7 @@ class LQFTMap:
     # =========================================================
     # DEBUG AND METRICS
     # =========================================================
-    def get_stats(self) -> dict:
+    def get_stats(self) -> Dict[str, int]:
         return {
             "snapshots_retained": len(self._snapshots),
             "uncommitted_mutations": len(self._mutable_head) + len(self._tombstones),

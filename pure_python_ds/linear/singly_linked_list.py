@@ -11,7 +11,7 @@ class SinglyLinkedList(Generic[T]):
     A strictly typed, memory-optimized Singly Linked List.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.head: Optional[ListNode[T]] = None
         self.tail: Optional[ListNode[T]] = None
         self._length: int = 0
@@ -76,7 +76,7 @@ class SinglyLinkedList(Generic[T]):
 
         return value
 
-    def reverse(self):
+    def reverse(self) -> None:
         """Reverses the list in O(n) time and O(1) space."""
         prev = None
         current = self.head

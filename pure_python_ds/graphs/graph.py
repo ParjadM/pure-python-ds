@@ -36,11 +36,12 @@ class Graph(Generic[T]):
         distances = {vertex: float("inf") for vertex in self._adj_list}
         distances[start] = 0
 
-        # Priority Queue: (distance, vertex)
-        pq = [(0, start)]
+        # Priority Queue: (distance, tie_breaker, vertex)
+        tie_breaker = 0
+        pq: List[Tuple[float, int, T]] = [(0.0, tie_breaker, start)]
 
         while pq:
-            current_distance, current_vertex = heapq.heappop(pq)
+            current_distance, _, current_vertex = heapq.heappop(pq)
 
             # If we found a longer path than we already recorded, skip it
             if current_distance > distances[current_vertex]:
@@ -52,7 +53,8 @@ class Graph(Generic[T]):
                 # If this path is shorter, update and push to PQ
                 if distance < distances[neighbor]:
                     distances[neighbor] = distance
-                    heapq.heappush(pq, (distance, neighbor))
+                    tie_breaker += 1
+                    heapq.heappush(pq, (distance, tie_breaker, neighbor))
 
         return distances
 
@@ -208,19 +210,22 @@ class Graph(Generic[T]):
         start = next(iter(self._adj_list))
         visited = {start}
         mst = []
-        pq: List[Tuple[float, T, T]] = []
+        pq: List[Tuple[float, int, T, T]] = []
+        tie_breaker = 0
 
         for neighbor, weight in self._adj_list[start].items():
-            heapq.heappush(pq, (weight, start, neighbor))
+            tie_breaker += 1
+            heapq.heappush(pq, (weight, tie_breaker, start, neighbor))
 
         while pq and len(visited) < len(self._adj_list):
-            weight, u, v = heapq.heappop(pq)
+            weight, _, u, v = heapq.heappop(pq)
             if v not in visited:
                 visited.add(v)
                 mst.append((u, v, weight))
                 for next_neighbor, next_weight in self._adj_list[v].items():
                     if next_neighbor not in visited:
-                        heapq.heappush(pq, (next_weight, v, next_neighbor))
+                        tie_breaker += 1
+                        heapq.heappush(pq, (next_weight, tie_breaker, v, next_neighbor))
 
         return mst
 

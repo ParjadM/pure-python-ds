@@ -1,7 +1,7 @@
 from typing import Dict, List
 
 
-def fibonacci(n: int, memo: Dict[int, int] = None) -> int:
+def fibonacci(n: int, memo: Optional[Dict[int, int]] = None) -> int:
     """
     Computes the nth Fibonacci number using Top-Down DP (Memoization).
     O(n) time complexity vs O(2^n) recursive complexity.

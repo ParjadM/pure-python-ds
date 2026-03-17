@@ -13,23 +13,26 @@ class HashTable:
 
     def set(self, key: str, value: Any):
         index = self._hash(key)
-        if not self.table[index]:
-            self.table[index] = SinglyLinkedList()
+        lst = self.table[index]
+        if lst is None:
+            lst = SinglyLinkedList()
+            self.table[index] = lst
 
         # Check if key exists to update, else append
-        current = self.table[index].head
+        current = lst.head
         while current:
             if current.value[0] == key:
                 current.value = (key, value)
                 return
             current = current.next
-        self.table[index].append((key, value))
+        lst.append((key, value))
 
     def get(self, key: str) -> Any:
         index = self._hash(key)
-        if not self.table[index]:
+        lst = self.table[index]
+        if lst is None:
             return None
-        current = self.table[index].head
+        current = lst.head
         while current:
             if current.value[0] == key:
                 return current.value[1]

@@ -12,7 +12,8 @@ class BinaryTree(Generic[T]):
             return ""
         from pure_python_ds.trees.utils import visualize_binary_tree
         return visualize_binary_tree(self.root)
-    def __init__(self, root_value: Optional[T] = None):
+    def __init__(self, root_value: Optional[T] = None) -> None:
+        self.root: Optional[TreeNode[T]]
         if root_value is not None:
             self.root = TreeNode(root_value)
         else:
@@ -31,6 +32,8 @@ class BinaryTree(Generic[T]):
 
         while len(q) > 0:
             current = q.dequeue()
+            if current is None:
+                continue
 
             if not current.left:
                 current.left = new_node

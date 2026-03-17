@@ -1,10 +1,14 @@
-from typing import Optional, TypeVar
+from typing import Any, Optional, Protocol, TypeVar
 
 from pure_python_ds.nodes import TreeNode
 from pure_python_ds.trees.binary_tree import BinaryTree
 from pure_python_ds.trees.binary_search_tree import BinarySearchTree
-from typing import Any
-T = TypeVar("T")
+
+class Comparable(Protocol):
+    def __lt__(self, other: Any) -> bool: ...
+    def __gt__(self, other: Any) -> bool: ...
+
+T = TypeVar("T", bound=Comparable)
 
 
 def convert_to_bst(tree: BinaryTree[T]) -> BinarySearchTree[T]:

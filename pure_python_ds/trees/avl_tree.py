@@ -1,8 +1,13 @@
-from typing import Generic, Optional, TypeVar
+from typing import Any, Generic, Optional, Protocol, TypeVar
 
 from pure_python_ds.nodes import TreeNode
 from pure_python_ds.trees.binary_search_tree import BinarySearchTree
-T = TypeVar("T")
+
+class Comparable(Protocol):
+    def __lt__(self, other: Any) -> bool: ...
+    def __gt__(self, other: Any) -> bool: ...
+
+T = TypeVar("T", bound=Comparable)
 
 
 class AVLTree(BinarySearchTree[T]):
@@ -20,6 +25,7 @@ class AVLTree(BinarySearchTree[T]):
     def _right_rotate(self, y: TreeNode[T]) -> TreeNode[T]:
         """Rotates the subtree to the right."""
         x = y.left
+        assert x is not None
         T2 = x.right
 
         # Perform rotation
@@ -34,6 +40,7 @@ class AVLTree(BinarySearchTree[T]):
     def _left_rotate(self, x: TreeNode[T]) -> TreeNode[T]:
         """Rotates the subtree to the left."""
         y = x.right
+        assert y is not None
         T2 = y.left
 
         # Perform rotation
@@ -67,20 +74,25 @@ class AVLTree(BinarySearchTree[T]):
         balance = self._get_balance(node)
 
         # 4. Mathematically balance the tree (The 4 Cases)
-        # Left Left Case
-        if balance > 1 and value < node.left.value:
-            return self._right_rotate(node)
-        # Right Right Case
-        if balance < -1 and value > node.right.value:
-            return self._left_rotate(node)
-        # Left Right Case
-        if balance > 1 and value > node.left.value:
-            node.left = self._left_rotate(node.left)
-            return self._right_rotate(node)
-        # Right Left Case
-        if balance < -1 and value < node.right.value:
-            node.right = self._right_rotate(node.right)
-            return self._left_rotate(node)
+        if balance > 1:
+            assert node.left is not None
+            # Left Left Case
+            if value < node.left.value:
+                return self._right_rotate(node)
+            # Left Right Case
+            if value > node.left.value:
+                node.left = self._left_rotate(node.left)
+                return self._right_rotate(node)
+
+        if balance < -1:
+            assert node.right is not None
+            # Right Right Case
+            if value > node.right.value:
+                return self._left_rotate(node)
+            # Right Left Case
+            if value < node.right.value:
+                node.right = self._right_rotate(node.right)
+                return self._left_rotate(node)
 
         return node
 
@@ -111,19 +123,24 @@ class AVLTree(BinarySearchTree[T]):
         balance = self._get_balance(root)
 
         # Left Left
-        if balance > 1 and self._get_balance(root.left) >= 0:
-            return self._right_rotate(root)
-        # Left Right
-        if balance > 1 and self._get_balance(root.left) < 0:
-            root.left = self._left_rotate(root.left)
-            return self._right_rotate(root)
-        # Right Right
-        if balance < -1 and self._get_balance(root.right) <= 0:
-            return self._left_rotate(root)
-        # Right Left
-        if balance < -1 and self._get_balance(root.right) > 0:
-            root.right = self._right_rotate(root.right)
-            return self._left_rotate(root)
+        if balance > 1:
+            assert root.left is not None
+            if self._get_balance(root.left) >= 0:
+                return self._right_rotate(root)
+            # Left Right
+            if self._get_balance(root.left) < 0:
+                root.left = self._left_rotate(root.left)
+                return self._right_rotate(root)
+        
+        if balance < -1:
+            assert root.right is not None
+            # Right Right
+            if self._get_balance(root.right) <= 0:
+                return self._left_rotate(root)
+            # Right Left
+            if self._get_balance(root.right) > 0:
+                root.right = self._right_rotate(root.right)
+                return self._left_rotate(root)
 
         return root
 
