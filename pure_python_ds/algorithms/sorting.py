@@ -1,3 +1,4 @@
+import heapq
 from typing import Any, List, Protocol, TypeVar
 
 class Comparable(Protocol):
