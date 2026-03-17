@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 
 def fibonacci(n: int, memo: Optional[Dict[int, int]] = None) -> int:
